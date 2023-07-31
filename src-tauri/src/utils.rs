@@ -32,6 +32,18 @@ pub mod shutdown_command {
         println!("{}", stdout);
     }
 
+    // rundll32.exe powrprof.dll, SetSuspendState Sleep
+    fn call_win_sleep_command() {
+        let output = Command::new("rundll32.exe")
+            .arg("powrprof.dll, SetSuspendState Sleep")
+            .stdout(Stdio::piped())
+            .output()
+            .unwrap();
+
+        let stdout = String::from_utf8(output.stdout).unwrap();
+        println!("{}", stdout);
+    }
+
     // macOs:
     // sudo shutdown -h +60
     // instead of time can specify now
@@ -68,16 +80,21 @@ pub mod shutdown_command {
     // win
     // sudo shutdown /h /t 0
 
-    // /s to shutdown, /h sleep, /r reboot
+    // /s to shutdown, /r reboot
+    // and for sleep there is another command:
+    // rundll32.exe powrprof.dll, SetSuspendState Sleep
     fn shutdown_win(mode: &str) {
-        let mode_arg: &str = match mode {
-            SHUTDOWN_OPTION => "/s",
-            REBOOT_OPTION => "/r",
-            SLEEP_OPTION => "/h",
-            _ => "/h",
-        };
+        if mode == SLEEP_OPTION {
+            call_win_sleep_command();
+        } else {
+            let mode_arg: &str = match mode {
+                SHUTDOWN_OPTION => "/s",
+                REBOOT_OPTION => "/r",
+                _ => "/s",
+            };
 
-        call_shutdown_command([mode_arg, "/t", "0"])
+            call_shutdown_command([mode_arg, "/t", "0"])
+        }
     }
 
     pub fn shutdown_resolver(mode: &str) {
