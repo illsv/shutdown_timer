@@ -35,7 +35,9 @@ pub mod shutdown_command {
     // rundll32.exe powrprof.dll, SetSuspendState Sleep
     fn call_win_sleep_command() {
         let output = Command::new("rundll32.exe")
-            .arg("powrprof.dll, SetSuspendState Sleep")
+            .arg("powrprof.dll,")
+            .arg("SetSuspendState")
+            .arg("Sleep")
             .stdout(Stdio::piped())
             .output()
             .unwrap();
