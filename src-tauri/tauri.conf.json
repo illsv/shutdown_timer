@@ -36,10 +36,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "resizable": true,
-        "title": "shutdown_timer",
-        "width": 800,
-        "height": 600
+        "resizable": false,
+        "title": "Shutdown Timer",
+        "width": 500,
+        "height": 500
       }
     ]
   }
