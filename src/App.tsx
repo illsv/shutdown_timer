@@ -57,11 +57,17 @@ function App() {
 
   return (
     <div className="container">
-      <h1>Shutdown Timer</h1>
+      <div className="countdown">
+        <div className="time hours">{formatTimeCell(hours)}</div>
+        <div className="time-divider">:</div>
+        <div className="time minutes">{formatTimeCell(minutes)}</div>
+        <div className="time-divider">:</div>
+        <div className="time seconds">{formatTimeCell(seconds)}</div>
+      </div>
 
       <form>
-        <div className="mode-selection">
-          <label htmlFor="shutdown-opt">Mode:</label>
+        <div className="mode-selection-row">
+          {/* <label htmlFor="shutdown-opt">Mode:</label> */}
           <select
             name="shutdown-mode"
             id="shutdown-opt"
@@ -74,73 +80,78 @@ function App() {
           </select>
         </div>
 
-        <div className="min-row">
+        <hr></hr>
+
+        <div className="minutes-row">
           <button
-            type="button"
-            onClick={() => {
-              addMinutesToTimer(0.1)
-            }}
-          >
-            0.1
-          </button>
-          <button
+            className="button"
             type="button"
             onClick={() => {
               addMinutesToTimer(5)
             }}
           >
-            5
+            +5
           </button>
           <button
+            className="button"
             type="button"
             onClick={() => {
               addMinutesToTimer(10)
             }}
           >
-            10
+            +10
           </button>
           <button
+            className="button"
             type="button"
             onClick={() => {
               addMinutesToTimer(30)
             }}
           >
-            30
+            +30
           </button>
           <button
+            className="button"
             type="button"
             onClick={() => {
               addMinutesToTimer(60)
             }}
           >
-            60
+            +60
           </button>
           <button
+            className="button"
             type="button"
             onClick={() => {
               addMinutesToTimer(120)
             }}
           >
-            120
+            +120
           </button>
         </div>
 
-        <button type="button" id="clear-timer" onClick={clearTimerMinutes}>
-          Clear
-        </button>
+        <hr></hr>
+        <div className="controls-row">
+          <button
+            id="cancel-button"
+            className="button"
+            type="button"
+            onClick={clearTimerMinutes}
+          >
+            Clear
+          </button>
+
+          <button
+            id="toggle-button"
+            className="button"
+            type="button"
+            onClick={toggleTimer}
+            disabled={!secondsAmount}
+          >
+            {timerActive ? 'Pause' : 'Start'}
+          </button>
+        </div>
       </form>
-
-      <div className="countdown">
-        <div className="hours">{formatTimeCell(hours)}</div>
-        <div className="time-divider">:</div>
-        <div className="minutes">{formatTimeCell(minutes)}</div>
-        <div className="time-divider">:</div>
-        <div className="seconds">{formatTimeCell(seconds)}</div>
-      </div>
-
-      <button type="button" onClick={toggleTimer} disabled={!secondsAmount}>
-        {timerActive ? 'Pause' : 'Start'}
-      </button>
     </div>
   )
 }

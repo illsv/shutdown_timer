@@ -1,4 +1,85 @@
+:root {
+  --white: ghostwhite;
+  --black: black;
+  --main-background: #616671;
+  --elements-background: #24292c;
+  --emphasis-color: #ff6e47;
+  --inset-shadow: #292f33;
+  --offset-shadow: #1f2325;
+}
+
 * {
   margin: 0;
   padding: 0;
+}
+
+body {
+  height: 100vh;
+  background-color: var(--main-background);
+  color: var(--black);
+}
+
+.button {
+  margin: 0.2rem;
+  width: 5.5rem;
+  background-color: var(--elements-background);
+  color: var(--white);
+  box-shadow:
+    0px 7px 20px 0px var(--offset-shadow),
+    inset 0px 2px 15px 5px var(--inset-shadow);
+}
+
+h1 {
+  padding-bottom: 1.5rem;
+}
+
+select {
+  background-color: var(--main-background);
+  height: 1.5rem;
+  width: 100px;
+  text-align-last: center;
+  border-radius: 30px;
+}
+
+.countdown {
+  background-color: var(--elements-background);
+  height: 3.5rem;
+  padding-top: 2rem;
+  width: 50%;
+  margin: 2rem auto;
+  border-radius: 50px;
+  box-shadow:
+    0px 20px 20px 0px var(--offset-shadow),
+    inset 0px 0px 10px 15px var(--inset-shadow);
+}
+
+.time {
+  font-size: 3rem;
+  display: inline;
+  color: var(--emphasis-color);
+}
+
+.time-divider {
+  font-size: 3rem;
+  display: inline;
+  color: var(--white);
+  /* vertical-align: baseline; */
+}
+
+hr {
+  width: 2rem;
+  margin: 1rem auto;
+  border: #0000;
+}
+
+#cancel-button {
+  color: var(--emphasis-color);
+}
+
+#toggle-button {
+  color: var(--emphasis-color);
+}
+
+#toggle-button:disabled {
+  color: var(--main-background);
 }
