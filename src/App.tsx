@@ -1,36 +1,36 @@
-import { useState, useEffect } from "react";
-import { invoke } from '@tauri-apps/api';
-import "./App.css";
+import { useState, useEffect } from 'react'
+import { invoke } from '@tauri-apps/api'
+import './App.css'
 
 function App() {
-  const [ timerActive, setTimerActive ] = useState<boolean>(false);
-  const [ secondsAmount, setSecondsAmount ] = useState<number>(0);
-  const [ selectedMode, setSelectedMode ] = useState<string>('sleep');
+  const [timerActive, setTimerActive] = useState<boolean>(false)
+  const [secondsAmount, setSecondsAmount] = useState<number>(0)
+  const [selectedMode, setSelectedMode] = useState<string>('sleep')
 
-  const [ hours, setHours ] = useState<number>(0);
-  const [ minutes, setMinutes ] = useState<number>(0);
-  const [ seconds, setSeconds ] = useState<number>(0);
+  const [hours, setHours] = useState<number>(0)
+  const [minutes, setMinutes] = useState<number>(0)
+  const [seconds, setSeconds] = useState<number>(0)
 
   useEffect(() => {
-    if(timerActive && secondsAmount === 0) executeShutdown()
-    if(!secondsAmount) return
-    if(!timerActive) return
+    if (timerActive && secondsAmount === 0) executeShutdown()
+    if (!secondsAmount) return
+    if (!timerActive) return
 
     const interval = setInterval(() => {
       const seconds = secondsAmount - 1
-      setSecondsAmount(seconds);
+      setSecondsAmount(seconds)
       setReturnValues(seconds)
-    }, 1000);
+    }, 1000)
 
     return () => clearInterval(interval)
-  }, [secondsAmount, timerActive]);
+  }, [secondsAmount, timerActive])
 
   const toggleTimer = () => {
     setTimerActive(!timerActive)
   }
 
   const addMinutesToTimer = (amount: number) => {
-    const seconds = secondsAmount + (amount * 60)
+    const seconds = secondsAmount + amount * 60
     setSecondsAmount(seconds)
     setReturnValues(seconds)
   }
@@ -45,7 +45,7 @@ function App() {
     setHours(Math.floor(seconds / 60 / 60))
     setMinutes(Math.floor(seconds / 60) % 60)
     setSeconds(seconds % 60)
-  };
+  }
 
   const formatTimeCell = (val: number) => {
     return val ? val : '00'
@@ -62,9 +62,11 @@ function App() {
       <form>
         <div className="mode-selection">
           <label htmlFor="shutdown-opt">Mode:</label>
-          <select name="shutdown-mode" id="shutdown-opt"
-                  onChange={e => setSelectedMode(e.target.value)}
-                  value={selectedMode}
+          <select
+            name="shutdown-mode"
+            id="shutdown-opt"
+            onChange={(e) => setSelectedMode(e.target.value)}
+            value={selectedMode}
           >
             <option value="shutdown">Shutdown</option>
             <option value="reboot">Reboot</option>
@@ -73,15 +75,59 @@ function App() {
         </div>
 
         <div className="min-row">
-          <button type="button" onClick={ () => {addMinutesToTimer(0.1)} }>0.1</button>
-          <button type="button" onClick={ () => {addMinutesToTimer(5)} }>5</button>
-          <button type="button" onClick={ () => {addMinutesToTimer(10)} }>10</button>
-          <button type="button" onClick={ () => {addMinutesToTimer(30)} }>30</button>
-          <button type="button" onClick={ () => {addMinutesToTimer(60)} }>60</button>
-          <button type="button" onClick={ () => {addMinutesToTimer(120)} }>120</button>
+          <button
+            type="button"
+            onClick={() => {
+              addMinutesToTimer(0.1)
+            }}
+          >
+            0.1
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              addMinutesToTimer(5)
+            }}
+          >
+            5
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              addMinutesToTimer(10)
+            }}
+          >
+            10
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              addMinutesToTimer(30)
+            }}
+          >
+            30
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              addMinutesToTimer(60)
+            }}
+          >
+            60
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              addMinutesToTimer(120)
+            }}
+          >
+            120
+          </button>
         </div>
 
-        <button type="button" id='clear-timer' onClick={clearTimerMinutes}>Clear</button>
+        <button type="button" id="clear-timer" onClick={clearTimerMinutes}>
+          Clear
+        </button>
       </form>
 
       <div className="countdown">
@@ -92,9 +138,11 @@ function App() {
         <div className="seconds">{formatTimeCell(seconds)}</div>
       </div>
 
-      <button type="button" onClick={toggleTimer} disabled={!secondsAmount}>{ timerActive ? 'Pause' : 'Start' }</button>
+      <button type="button" onClick={toggleTimer} disabled={!secondsAmount}>
+        {timerActive ? 'Pause' : 'Start'}
+      </button>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
