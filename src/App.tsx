@@ -48,7 +48,10 @@ function App() {
   }
 
   const formatTimeCell = (val: number) => {
-    return val ? val : '00'
+    let str: string = val.toString()
+    if (str.length >= 2) return val
+    if (str.length == 1) return '0' + val
+    return '00'
   }
 
   const executeShutdown = async () => {
@@ -140,6 +143,8 @@ function App() {
           >
             Clear
           </button>
+
+          <hr className="button-splitter"></hr>
 
           <button
             id="toggle-button"

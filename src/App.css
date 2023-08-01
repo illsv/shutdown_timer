@@ -63,12 +63,10 @@ select {
   font-size: 3rem;
   display: inline;
   color: var(--white);
-  /* vertical-align: baseline; */
 }
 
 hr {
-  width: 2rem;
-  margin: 1rem auto;
+  margin: 1.3rem auto;
   border: #0000;
 }
 
@@ -82,4 +80,9 @@ hr {
 
 #toggle-button:disabled {
   color: var(--main-background);
+}
+
+.button-splitter {
+  width: 2rem;
+  display: inline-block;
 }
