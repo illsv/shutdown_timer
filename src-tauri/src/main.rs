@@ -5,8 +5,8 @@ use crate::utils::shutdown_command::shutdown_resolver;
 pub mod utils;
 
 #[tauri::command]
-fn shutdown_action(mode: &str) {
-    shutdown_resolver(mode);
+fn shutdown_action(mode: &str, pc_only: bool) {
+    shutdown_resolver(mode, pc_only);
 }
 
 fn main() {

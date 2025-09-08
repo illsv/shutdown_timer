@@ -2,10 +2,17 @@ import { useState, useEffect } from 'react'
 import { invoke } from '@tauri-apps/api'
 import './App.css'
 
+enum timerModes {
+  SLEEP = 'sleep',
+  REBOOT = 'reboot',
+  SHUTDOWN = 'shutdown',
+}
+
 function App() {
   const [timerActive, setTimerActive] = useState<boolean>(false)
   const [secondsAmount, setSecondsAmount] = useState<number>(0)
-  const [selectedMode, setSelectedMode] = useState<string>('sleep')
+  const [selectedMode, setSelectedMode] = useState<string>(timerModes.SHUTDOWN)
+  const [displayPCOnly, setDisplayPCOnly] = useState<boolean>(true)
 
   const [hours, setHours] = useState<number>(0)
   const [minutes, setMinutes] = useState<number>(0)
@@ -55,7 +62,10 @@ function App() {
   }
 
   const executeShutdown = async () => {
-    await invoke('shutdown_action', { mode: selectedMode })
+    await invoke('shutdown_action', {
+      mode: selectedMode,
+      pcOnly: displayPCOnly,
+    })
   }
 
   return (
@@ -77,13 +87,26 @@ function App() {
             onChange={(e) => setSelectedMode(e.target.value)}
             value={selectedMode}
           >
-            <option value="shutdown">Shutdown</option>
-            <option value="reboot">Reboot</option>
-            <option value="sleep">Sleep</option>
+            <option value={timerModes.SHUTDOWN}>Shutdown</option>
+            <option value={timerModes.REBOOT}>Reboot</option>
+            <option value={timerModes.SLEEP}>Sleep</option>
           </select>
         </div>
 
-        <hr></hr>
+        <div className="checkbox-row">
+          <label className="checkbox-label">
+            Change display to <b>PC only</b>?
+            <input
+              type="checkbox"
+              name="display-pc-only"
+              id="display-checkbox"
+              checked={displayPCOnly}
+              onChange={(e) => setDisplayPCOnly(e.target.checked)}
+            />
+          </label>
+        </div>
+
+        <hr />
 
         <div className="minutes-row">
           <button

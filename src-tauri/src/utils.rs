@@ -46,6 +46,17 @@ pub mod shutdown_command {
         println!("{}", stdout);
     }
 
+    fn call_display_change_command() {
+        let status = Command::new("DisplaySwitch.exe")
+        .arg("/internal")
+        .status()
+        .expect("DisplaySwitch err");
+
+        if !status.success() {
+            eprintln!("Can't switch display setting");
+        }
+    }
+
     // macOs:
     // sudo shutdown -h +60
     // instead of time can specify now
@@ -85,7 +96,11 @@ pub mod shutdown_command {
     // /s to shutdown, /r reboot
     // and for sleep there is another command:
     // rundll32.exe powrprof.dll, SetSuspendState Sleep
-    fn shutdown_win(mode: &str) {
+    fn shutdown_win(mode: &str, pc_only: bool) {
+        if pc_only {
+            call_display_change_command();
+        }
+
         if mode == SLEEP_OPTION {
             call_win_sleep_command();
         } else {
@@ -99,10 +114,10 @@ pub mod shutdown_command {
         }
     }
 
-    pub fn shutdown_resolver(mode: &str) {
+    pub fn shutdown_resolver(mode: &str, pc_only: bool) {
         match env::consts::OS {
             "macos" => shutdown_mac(mode),
-            "windows" => shutdown_win(mode),
+            "windows" => shutdown_win(mode, pc_only),
             "linux" => shutdown_linux(mode),
             _ => shutdown_linux(mode),
         };
