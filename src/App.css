@@ -124,7 +124,7 @@ hr {
   color: var(--emphasis-color);
   content: 'yes';
   position: absolute;
-  left: 0.5em;
-  top: 0.2em;
+  left: 0.45em;
+  top: 0.1em;
   box-shadow: 0px 7px 20px 0px var(--offset-shadow);
 }
