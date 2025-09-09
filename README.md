@@ -22,9 +22,7 @@ Here’s how it looks in action:
 ---
 
 ## 🚀 Installation
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/shutdown-timer.git
+Download the latest installer from the [Releases page](https://github.com/illsv/shutdown_timer/releases).
 
  ---
 
